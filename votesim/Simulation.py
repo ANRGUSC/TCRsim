@@ -4,6 +4,7 @@ from Voter import Voter
 from Item import Item
 from TCR import TCR
 from copy import copy
+# import matplotlib.pyplot as plt
 
 
 NUM_ITEMS = 100
@@ -46,16 +47,63 @@ def set_vote(voter, item):
 
 def write_file(tcr_array, item_array, vote_results):
     f = open("demofile.txt", "w")
-    f.write("TCR Val\tValid\tAccept\t")
+    f.write("TCR Val\tValid\tAccept\t\t")
     for i in range(NUM_VOTERS):
         f.write("V" + str(i + 1) + "\t")
     f.write("\n")
     for i in range(NUM_ITEMS):
-        f.write("%.2f" % tcr_array[i].get_tcr_value() + "\t" + str(item_array[i].is_valid()) + "\t" + str(
-            item_array[i].is_accepted()) + "\t")
+        f.write("%.2f" % tcr_array[i].get_tcr_value() + "\t" + str(item_array[i].is_valid())
+                + "\t" + str(item_array[i].is_accepted()) + "\t\t")
         for j in range(NUM_VOTERS):
             f.write("%.2f" % vote_results[i, j].get_tokens() + "\t")
         f.write("\n")
+
+
+def generate_plot(vote_results):
+    # create 4 different arrays for informed-engaged, uninformed-engaged, informed-unengaged, uninformed-unengaged
+    # average?
+    arr_informed_engaged = np.zeros(NUM_ITEMS, dtype=float)
+    arr_uninformed_engaged = np.zeros(NUM_ITEMS, dtype=float)
+    arr_informed_unengaged = np.zeros(NUM_ITEMS, dtype=float)
+    arr_uninformed_unengaged = np.zeros(NUM_ITEMS, dtype=float)
+
+    num_informed_engaged = 0
+    num_uninformed_engaged = 0
+    num_informed_unengaged = 0
+    num_uninformed_unengaged = 0
+    for i in range(NUM_VOTERS):
+        voter = vote_results[0, i]
+        if voter.is_informed() and voter.is_engaged():
+            num_informed_engaged += 1
+        elif voter.is_informed() and not voter.is_engaged():
+            num_informed_unengaged += 1
+        elif not voter.is_informed() and voter.is_engaged():
+            num_uninformed_engaged += 1
+        elif not voter.is_informed() and not voter.is_engaged():
+            num_uninformed_unengaged += 1
+
+    for i in range(NUM_ITEMS):
+        for j in range(NUM_VOTERS):
+            voter = vote_results[i, j]
+            if voter.is_informed() and voter.is_engaged():
+                arr_informed_engaged[i] += voter.get_tokens()
+            elif voter.is_informed() and not voter.is_engaged():
+                arr_informed_unengaged += voter.get_tokens()
+            elif not voter.is_informed() and voter.is_engaged():
+                arr_uninformed_engaged += voter.get_tokens()
+            elif not voter.is_informed() and not voter.is_engaged():
+                arr_uninformed_unengaged += voter.get_tokens()
+        arr_informed_engaged[i] /= num_informed_engaged
+        arr_informed_unengaged[i] /= num_informed_unengaged
+        arr_uninformed_engaged[i] /= num_uninformed_engaged
+        arr_uninformed_unengaged[i] /= num_uninformed_unengaged
+
+    # labels = ["informed-engaged ", "informed-unengaged", "uninformed-engaged", "uninformed-unengaged"]
+    # plot = np.stack(arr_informed_engaged, arr_informed_unengaged, arr_uninformed_engaged, arr_uninformed_unengaged)
+    # fig, ax = plt.subplots()
+    # ax.stackplot(y1, y2, y3, labels=labels)
+    # ax.legend(loc='upper left')
+    # plt.show()
 
 
 def main():
@@ -127,6 +175,6 @@ def main():
             tcr_array[i].set_tcr_value(0, 1, 0, 0)
 
     write_file(tcr_array, item_array, vote_results)
-
+    generate_plot(vote_results)
 
 main()

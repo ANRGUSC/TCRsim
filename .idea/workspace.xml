@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7c197067-ddec-43b0-a863-45eba74be588" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/votesim/Simulation.py" beforeDir="false" afterPath="$PROJECT_DIR$/votesim/Simulation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/votesim/TCR.py" beforeDir="false" afterPath="$PROJECT_DIR$/votesim/TCR.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/votesim/demofile.txt" beforeDir="false" afterPath="$PROJECT_DIR$/votesim/demofile.txt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -26,23 +27,23 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="3" />
-          <entry key="py" value="10496" />
+          <entry key="py" value="11913" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="3" />
-          <entry key="Python" value="10496" />
+          <entry key="Python" value="11913" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="py" value="9" />
+          <entry key="py" value="12" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Python" value="9" />
+          <entry key="Python" value="12" />
         </counts>
       </usages-collector>
     </session>
@@ -52,15 +53,16 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/votesim/Simulation.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="394">
-              <caret line="54" column="48" lean-forward="true" selection-start-line="54" selection-start-column="48" selection-end-line="54" selection-end-column="48" />
+            <state relative-caret-position="265">
+              <caret line="102" column="27" selection-start-line="102" selection-start-column="27" selection-end-line="102" selection-end-column="27" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
-                <marker date="1539542716842" expanded="true" signature="454:456" ph="..." />
-                <marker date="1539542716842" expanded="true" signature="1093:1575" ph="..." />
+                <marker date="1539552780555" expanded="true" signature="489:490" ph="..." />
+                <marker date="1539552780555" expanded="true" signature="1127:1616" ph="..." />
+                <marker date="1539552780555" expanded="true" signature="1838:3827" ph="..." />
               </folding>
             </state>
           </provider>
@@ -69,22 +71,24 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/votesim/TCR.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" column="45" lean-forward="true" selection-start-line="11" selection-start-column="45" selection-end-line="11" selection-end-column="45" />
+            <state relative-caret-position="120">
+              <caret line="8" column="35" selection-start-line="8" selection-start-column="35" selection-end-line="8" selection-end-column="35" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/votesim/Voter.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="15" column="30" lean-forward="true" selection-start-line="15" selection-start-column="30" selection-end-line="15" selection-end-column="30" />
+            <state relative-caret-position="165">
+              <caret line="11" column="30" selection-start-line="11" selection-start-column="30" selection-end-line="11" selection-end-column="30" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
-                <marker date="1539234446712" expanded="true" signature="83:88" ph="..." />
-                <marker date="1539234446712" expanded="true" signature="417:466" ph="..." />
-                <marker date="1539234446712" expanded="true" signature="531:537" ph="..." />
+                <marker date="1539544597651" expanded="true" signature="83:88" ph="..." />
+                <marker date="1539544597651" expanded="true" signature="433:466" ph="..." />
+                <marker date="1539544597651" expanded="true" signature="487:496" ph="..." />
+                <marker date="1539544597651" expanded="true" signature="531:537" ph="..." />
+                <marker date="1539544597651" expanded="true" signature="558:567" ph="..." />
               </folding>
             </state>
           </provider>
@@ -112,6 +116,11 @@
       </list>
     </option>
   </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>is_informed</find>
+    </findStrings>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -122,17 +131,17 @@
         <option value="$PROJECT_DIR$/votesim/__init__.py" />
         <option value="$PROJECT_DIR$/votesim/Item.py" />
         <option value="$PROJECT_DIR$/votesim/Token.py" />
-        <option value="$PROJECT_DIR$/votesim/Voter.py" />
         <option value="$PROJECT_DIR$/votesim/TCR.py" />
+        <option value="$PROJECT_DIR$/votesim/Voter.py" />
         <option value="$PROJECT_DIR$/votesim/Simulation.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="61" />
-    <option name="y" value="146" />
-    <option name="width" value="1193" />
-    <option name="height" value="958" />
+    <option name="x" value="108" />
+    <option name="y" value="204" />
+    <option name="width" value="1361" />
+    <option name="height" value="978" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -269,7 +278,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="61" y="146" width="1193" height="958" extended-state="0" />
+    <frame x="108" y="204" width="1361" height="978" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" weight="0.18058077" />
@@ -277,7 +286,7 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.27251732" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.26636568" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3995381" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -291,26 +300,6 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Data View" order="3" />
     </layout>
-    <layout-to-restore>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.18058077" />
-      <window_info id="Structure" order="1" weight="0.24954627" />
-      <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.27433628" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
-      <window_info anchor="bottom" id="Python Console" order="8" />
-      <window_info anchor="bottom" id="Terminal" order="9" />
-      <window_info anchor="bottom" id="Version Control" order="10" />
-      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Data View" order="3" />
-    </layout-to-restore>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -319,6 +308,21 @@
     <entry file="file://$PROJECT_DIR$/test.py" />
     <entry file="file://$PROJECT_DIR$/votesim/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/votesim/Voter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="30" selection-start-line="11" selection-start-column="30" selection-end-line="11" selection-end-column="30" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+            <marker date="1539544597651" expanded="true" signature="83:88" ph="..." />
+            <marker date="1539544597651" expanded="true" signature="433:466" ph="..." />
+            <marker date="1539544597651" expanded="true" signature="487:496" ph="..." />
+            <marker date="1539544597651" expanded="true" signature="531:537" ph="..." />
+            <marker date="1539544597651" expanded="true" signature="558:567" ph="..." />
+          </folding>
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/votesim/Item.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -333,32 +337,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/votesim/TCR.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="45" lean-forward="true" selection-start-line="11" selection-start-column="45" selection-end-line="11" selection-end-column="45" />
+        <state relative-caret-position="120">
+          <caret line="8" column="35" selection-start-line="8" selection-start-column="35" selection-end-line="8" selection-end-column="35" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/votesim/Simulation.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="394">
-          <caret line="54" column="48" lean-forward="true" selection-start-line="54" selection-start-column="48" selection-end-line="54" selection-end-column="48" />
+        <state relative-caret-position="265">
+          <caret line="102" column="27" selection-start-line="102" selection-start-column="27" selection-end-line="102" selection-end-column="27" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
-            <marker date="1539542716842" expanded="true" signature="454:456" ph="..." />
-            <marker date="1539542716842" expanded="true" signature="1093:1575" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/votesim/Voter.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="30" lean-forward="true" selection-start-line="15" selection-start-column="30" selection-end-line="15" selection-end-column="30" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-            <marker date="1539234446712" expanded="true" signature="83:88" ph="..." />
-            <marker date="1539234446712" expanded="true" signature="417:466" ph="..." />
-            <marker date="1539234446712" expanded="true" signature="531:537" ph="..." />
+            <marker date="1539552780555" expanded="true" signature="489:490" ph="..." />
+            <marker date="1539552780555" expanded="true" signature="1127:1616" ph="..." />
+            <marker date="1539552780555" expanded="true" signature="1838:3827" ph="..." />
           </folding>
         </state>
       </provider>
