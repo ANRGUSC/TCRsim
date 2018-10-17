@@ -4,7 +4,7 @@ class TCR:
         self.__mTotalTokens = total_tokens
         self.__mTokenValue = None
 
-        self.__mTCRValue = 0
+        self.__mTCRValue = 0.0
         self.__mNumValidItems = 0
         self.__mNumInvalidItems = 0
         self.__mNumTotalItems = 0
@@ -20,6 +20,7 @@ class TCR:
         self.__mNumInvalidItems += invalid_included + valid_not_included
         self.__mNumTotalItems += valid_included + invalid_included + invalid_not_included + valid_not_included
         self.__mTCRValue = (self.__mNumValidItems - self.__mNumInvalidItems) / self.__mNumTotalItems
+        # print(self.__mNumValidItems, " ", self.__mNumInvalidItems, " ", self.__mNumTotalItems)
 
     def get_tcr_value(self):
         return self.__mTCRValue

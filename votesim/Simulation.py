@@ -46,7 +46,7 @@ def set_vote(voter, item):
 
 
 def write_file(tcr_array, item_array, vote_results):
-    f = open("demofile.txt", "w")
+    f = open("output.txt", "w")
     f.write("TCR Val\tValid\tAccept\t\t")
     for i in range(NUM_VOTERS):
         f.write("V" + str(i + 1) + "\t")
@@ -57,6 +57,20 @@ def write_file(tcr_array, item_array, vote_results):
         for j in range(NUM_VOTERS):
             f.write("%.2f" % vote_results[i, j].get_tokens() + "\t")
         f.write("\n")
+
+    f.write("\t\t\t\t")
+    for i in range(NUM_VOTERS):
+        if vote_results[0, i].is_engaged():
+            f.write("Eng\t")
+        else:
+            f.write("Uneng\t")
+    f.write("\n\t\t\t\t")
+    for i in range(NUM_VOTERS):
+        if vote_results[0, i].is_informed():
+            f.write("Inf\t")
+        else:
+            f.write("Uninf\t")
+    f.write("\n")
 
 
 def generate_plot(vote_results):
@@ -109,9 +123,9 @@ def generate_plot(vote_results):
 def main():
     global TOTAL_TOKENS
     global STAKE
-    vote_results = np.empty((NUM_ITEMS, NUM_VOTERS), dtype=Voter)
+    vote_results = np.empty((NUM_ITEMS, NUM_VOTERS), dtype=type(Voter))
     item_array = np.array([Item() for _ in range(NUM_ITEMS)])
-    tcr_array = np.empty(NUM_ITEMS, dtype=TCR)
+    tcr_array = np.empty(NUM_ITEMS, dtype=type(TCR))
 
     for i in range(NUM_ITEMS):
         accepted_votes = 0
@@ -176,5 +190,6 @@ def main():
 
     write_file(tcr_array, item_array, vote_results)
     generate_plot(vote_results)
+
 
 main()
