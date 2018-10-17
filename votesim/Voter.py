@@ -1,8 +1,8 @@
 import numpy as np
 import random
 
-P_ENGAGED = 0.5
-P_INFORMED = 0.5
+P_ENGAGED = 0.8
+P_INFORMED = 0.8
 
 
 class Voter():
@@ -19,10 +19,10 @@ class Voter():
         return self.__mInformed
 
     def get_engagement(self):
-        return random.random() > P_ENGAGED
+        return random.random() < P_ENGAGED
 
     def get_inform(self):
-        return random.random() > P_INFORMED
+        return random.random() < P_INFORMED
 
     def get_tokens(self):
         return self.__mTokens

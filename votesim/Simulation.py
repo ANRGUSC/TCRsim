@@ -25,9 +25,9 @@ STAKE_I = 0.5  # should stake increase in proportion to how many total tokens ar
 STAKE = 0.5
 
 P_VE = .9
-P_VD = .4
+P_VD = .1
 P_VCI = .8
-P_VCU = .5
+P_VCU = .1
 
 
 def set_vote(voter, item):
@@ -41,7 +41,7 @@ def set_vote(voter, item):
             voter.set_vote(item.is_valid())  # set vote to correct vote
         else:
             voter.set_vote(not item.is_valid())  # else sets vote to incorrect vote
-
+    print(str(voter.is_engaged()), voter.get_vote())
     return voter
 
 
@@ -137,6 +137,7 @@ def main():
                 vote_results[i, j] = set_vote(Voter(DEFAULT_TOKENS), item)
             else:
                 v = copy(vote_results[i - 1, j])
+                v.set_vote(None)
                 vote_results[i, j] = set_vote(v, item)
 
             if vote_results[i, j].get_vote() is True:
