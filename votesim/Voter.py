@@ -1,9 +1,8 @@
 import numpy as np
 import random
 
-P_ENGAGED = 0.8
-P_INFORMED = 0.8
-
+P_ENGAGED = 0.5
+P_INFORMED = 0.5
 
 class Voter():
     def __init__(self, tokens):
