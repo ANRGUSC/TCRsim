@@ -5,54 +5,88 @@ from Item import Item
 from TCR import TCR
 from copy import copy
 import matplotlib.pyplot as plt
-from Tkinter import *
-
 
 
 class Simulation():
     def __init__(self):
         self.__numItems = 100
         self.__numVoters = 20
-        self.__defaultTokens = 10
+        self.__defaultTokens = 100
 
         self.__stakePool = 0.0
         self.__totalTokens = self.__numVoters * self.__defaultTokens
 
-        self.__alpha = .25
-        self.__beta = .25
-        self.__gamma = .25
-        self.__theta = .25
+        self.__delta = .02
 
-        self.__delta = 0.04
+        self.__stake = self.__defaultTokens * .05
+        self.__initialStake = self.__stake
 
-        self.__initialStake = 0.5  # should self.__stake increase in proportion to how many total tokens are available?
-        self.__stake = 0.5
+        self.__pVE = .8
+        self.__pVD = .2
+        self.__pVCI = .85
+        self.__pVCU = .15
 
-        self.__pVE = .9
-        self.__pVD = .1
-        self.__pVCI = .8
-        self.__pVCU = .1
+        self.__pEngaged = .5
+        self.__pInformed = .5
 
-    def parse_input(self):
-        print('parsing')
 
     def get_input(self):
-        numVoters = 0
-        while numVoters < 10:
-            numVoters = input("Enter number of voters ( > 10 ): ")
-        self.__numVoters = numVoters
+        x = raw_input("Would you like to input your own variables? (Y/N): ")
+        if x == 'Y' or x == 'y':
+            numVoters = 0
+            while numVoters < 10:
+                numVoters = int(input("Enter number of voters ( > 0 ): "))
+            self.__numVoters = numVoters
 
-        numItems = 0
-        while numItems < 10:
-            numItems = input("Enter number of items ( > 10 ): ")
-        self.__numItems = numItems
+            numItems = 0
+            while numItems < 10:
+                numItems = int(input("Enter number of items ( > 5 ): "))
+            self.__numItems = numItems
+
+            defaultTokens = -1
+            while defaultTokens < 0:
+                defaultTokens = int(input("Enter number of default tokens each voter starts with ( > 0 ): "))
+            self.__defaultTokens = defaultTokens
+
+            pEngaged = -1
+            while pEngaged < 0 or pEngaged > 1:
+                pEngaged = float(input("Enter probability of a voter being engaged (0 to 1): "))
+            self.__pEngaged = pEngaged
+
+            pInformed = -1
+            while pInformed < 0 or pInformed > 1:
+                pInformed = float(input("Enter probability of voter being informed (0 to 1): "))
+            self.__pInformed = pInformed
+
+            pVoteEngaged = -1
+            while pVoteEngaged < 0 or pVoteEngaged > 1:
+                pVoteEngaged = float(input("Enter probability of voting if engaged (0 to 1): "))
+            self.__pVE = pVoteEngaged
+
+            pVoteDisengaged = -1
+            while pVoteDisengaged < 0 or pVoteDisengaged > 1:
+                pVoteDisengaged = float(input("Enter probability of voting if unengaged (0 to 1): "))
+            self.__pVD = pVoteDisengaged
+
+            pVoteCorrectInformed = -1
+            while pVoteCorrectInformed < 0 or pVoteCorrectInformed > 1:
+                pVoteCorrectInformed = float(input("Enter probability of voter voting correctly if informed (0 to 1): "))
+            self.__pVCI = pInformed
+
+            pVoteCorrectUninformed = -1
+            while pVoteCorrectUninformed < 0 or pVoteCorrectUninformed > 1:
+                pVoteCorrectUninformed = float(input("Enter probability of voter voting correct if uninformed (0 to 1): "))
+            self.__pVCU = pVoteCorrectUninformed
 
 
     def set_vote(self, voter, item):
         p_vote = random.random()
         if (voter.is_engaged() and self.__pVE > p_vote) or (not voter.is_engaged() and self.__pVD > p_vote):
-            voter.set_tokens(voter.get_tokens() - self.__stake)
-            self.__stakePool += self.__stake
+            stake = self.__stake
+            if voter.get_tokens() < self.__stake:
+                stake = voter.get_tokens()
+            self.__stakePool += stake
+            voter.set_tokens(voter.get_tokens() - stake)
             p_correct = random.random()
             if (voter.is_informed() and self.__pVCI > p_correct) or (not voter.is_informed() and self.__pVCU > p_correct):
                 voter.set_vote(item.is_valid())  # set vote to correct vote
@@ -66,12 +100,16 @@ class Simulation():
         f.write("TCR Val\tValid\tAccept\t\t")
         for i in range(self.__numVoters):
             f.write("V" + str(i + 1) + "\t")
-        f.write("\n")
+        f.write("Total\n")
+        total = 0
         for i in range(self.__numItems):
             f.write("%.2f" % tcr_array[i].get_tcr_value() + "\t" + str(item_array[i].is_valid())
                     + "\t" + str(item_array[i].is_accepted()) + "\t\t")
             for j in range(self.__numVoters):
+                total += vote_results[i,j].get_tokens()
                 f.write("%.2f" % vote_results[i, j].get_tokens() + "\t")
+            f.write(str(total))
+            total = 0
             f.write("\n")
 
         f.write("\t\t\t\t")
@@ -90,8 +128,6 @@ class Simulation():
 
 
     def generate_plot(self, vote_results):
-        # create 4 different arrays for informed-engaged, uninformed-engaged, informed-unengaged, uninformed-unengaged
-        # average?
         arr_informed_engaged = np.zeros(self.__numItems, dtype=float)
         arr_uninformed_engaged = np.zeros(self.__numItems, dtype=float)
         arr_informed_unengaged = np.zeros(self.__numItems, dtype=float)
@@ -169,7 +205,7 @@ class Simulation():
 
             for j in range(self.__numVoters):
                 if i == 0:
-                    vote_results[i, j] = self.set_vote(Voter(self.__defaultTokens), item)
+                    vote_results[i, j] = self.set_vote(Voter(self.__defaultTokens, self.__pEngaged, self.__pInformed), item)
                 else:
                     v = copy(vote_results[i - 1, j])
                     v.set_vote(None)
@@ -189,15 +225,15 @@ class Simulation():
                 num_majority = rejected_votes
             item_array[i] = item
 
+            prev_tokens = self.__totalTokens
             self.__totalTokens = (1 + self.__delta) * self.__totalTokens
             tcr_array[i] = TCR(self.__totalTokens)
 
             for j in range(self.__numVoters):
                 voter = vote_results[i, j]
                 num_stake_majority_tokens = self.__stakePool / num_majority
-                # print(num_stake_majority_tokens)
-                num_inflation_tokens = (self.__totalTokens - (self.__totalTokens / (1 + self.__delta))) / (accepted_votes + rejected_votes)
-
+                num_inflation_tokens = (self.__totalTokens - prev_tokens) / (num_majority)
+                print(self.__totalTokens)
                 if voter.get_vote() is not None:
                     if item_array[i].is_accepted() == voter.get_vote():
                         # if voter voted correctly, give self.__stake value back
@@ -205,7 +241,9 @@ class Simulation():
 
                     # every voter gets total tokens * self.__delta tokens
                     voter.set_tokens(voter.get_tokens() + num_inflation_tokens)
-            self.__stake = self.__initialStake / (self.__numVoters * self.__defaultTokens) * self.__totalTokens
+            self.__stakePool = 0
+            # self.__stake = (self.__stake * (1 + self.__delta))
+            self.__stake = ( self.__initialStake / self.__defaultTokens ) * (self.__totalTokens / self.__numVoters)
 
         self.set_tcr_values(tcr_array, item_array)
 
