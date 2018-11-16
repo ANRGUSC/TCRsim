@@ -19,10 +19,12 @@ class TCR:
         self.__mNumValidItems += valid_included + invalid_not_included
         self.__mNumInvalidItems += invalid_included + valid_not_included
         self.__mNumTotalItems += valid_included + invalid_included + invalid_not_included + valid_not_included
-        tcr_val = (float(self.__mNumValidItems - self.__mNumInvalidItems) / self.__mNumTotalItems)
+        tcr_val = (float(self.__mNumValidItems - self.__mNumInvalidItems))
         self.__mTCRValue = tcr_val
             
 
     def get_tcr_value(self):
+        if self.__mTCRValue <= 0: 
+            return 0
         return self.__mTCRValue
 

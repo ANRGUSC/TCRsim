@@ -25,8 +25,8 @@ class Voter():
         return self.__mTokens
 
     def set_tokens(self, tokens):
-        if tokens <= 0:
-            self.__mTokens = 0
+        if tokens <= 0.0:
+            self.__mTokens = 0.0
         else:
             self.__mTokens = tokens
 

@@ -9,14 +9,15 @@ import matplotlib.pyplot as plt
 
 class Simulation():
     def __init__(self):
-        self.__numItems = 100
-        self.__numVoters = 20
-        self.__defaultTokens = 100
+        self.__numItems = 50
+        self.__numVoters = 100
+        self.__defaultTokens = 100.0
 
         self.__stakePool = 0.0
+        self.__totalTokens = 0.0
         self.__totalTokens = self.__numVoters * self.__defaultTokens
 
-        self.__delta = .02
+        self.__delta = .00
 
         self.__stake = self.__defaultTokens * .05
         self.__initialStake = self.__stake
@@ -27,7 +28,7 @@ class Simulation():
         self.__pVCU = .15
 
         self.__pEngaged = .5
-        self.__pInformed = .5
+        self.__pInformed = .1
 
 
     def get_input(self):
@@ -84,7 +85,7 @@ class Simulation():
         if (voter.is_engaged() and self.__pVE > p_vote) or (not voter.is_engaged() and self.__pVD > p_vote):
             stake = self.__stake
             if voter.get_tokens() < self.__stake:
-                stake = voter.get_tokens()
+                pass
             self.__stakePool += stake
             voter.set_tokens(voter.get_tokens() - stake)
             p_correct = random.random()
@@ -127,7 +128,7 @@ class Simulation():
         f.write("\n")
 
 
-    def generate_plot(self, vote_results):
+    def generate_voter_plot(self, vote_results):
         arr_informed_engaged = np.zeros(self.__numItems, dtype=float)
         arr_uninformed_engaged = np.zeros(self.__numItems, dtype=float)
         arr_informed_unengaged = np.zeros(self.__numItems, dtype=float)
@@ -165,22 +166,94 @@ class Simulation():
             arr_uninformed_unengaged[i] /= num_uninformed_unengaged
 
         plt.plot(arr_informed_engaged, label='informed-engaged')
-        plt.plot(arr_informed_unengaged, label='informed-unengaged')
+        plt.plot(arr_informed_unengaged, label='informed-disengaged')
         plt.plot(arr_uninformed_engaged, label='uninformed-engaged')
-        plt.plot(arr_uninformed_unengaged, label='uninformed-unengaged')
-        plt.xlabel('voting round')
+        plt.plot(arr_uninformed_unengaged, label='uninformed-disengaged')
+        plt.xlabel('Voting Round')
         plt.ylabel('Tokens')
-        plt.legend()
+        plt.legend(loc = 'upper left')
+        plt.savefig('images/token_infm' + str(self.__pInformed)[2] + 'infl' + str(self.__delta)[2:] + '.png')
         plt.show()
+
+    def generate_tcr_plot(self, tcr_array):
+        token_values = []
+        for tcr in tcr_array:
+            token_values.append(tcr.get_tcr_value())
+        plt.plot(token_values, label='TCR Value')
+        plt.xlabel('Voting Round')
+        plt.ylabel('Value')
+        plt.legend(loc = 'upper left')
+        plt.savefig('images/tcr_infm' + str(self.__pInformed)[2] + 'infl' + str(self.__delta)[2:] + '.png')
+        plt.show()
+
+
+    '''
+    wealth of IE class = ( total # of tokens held by IE voters / total # of tokens ) * TCR value
+
+    average wealth of an IE voter = class wealth / # of individuals 
+    '''
+    def generate_wealth_plot(self, vote_results, tcr_array):
+        wealth_ie = np.zeros(self.__numItems, dtype=float)
+        wealth_iu = np.zeros(self.__numItems, dtype=float)
+        wealth_ue = np.zeros(self.__numItems, dtype=float)
+        wealth_uu = np.zeros(self.__numItems, dtype=float)
+
+        num_informed_engaged = 0
+        num_uninformed_engaged = 0
+        num_informed_unengaged = 0
+        num_uninformed_unengaged = 0
+        for i in range(self.__numVoters):
+            voter = vote_results[0, i]
+            if voter.is_informed() and voter.is_engaged():
+                num_informed_engaged += 1
+            elif voter.is_informed() and not voter.is_engaged():
+                num_informed_unengaged += 1
+            elif not voter.is_informed() and voter.is_engaged():
+                num_uninformed_engaged += 1
+            elif not voter.is_informed() and not voter.is_engaged():
+                num_uninformed_unengaged += 1
+        
+
+        for i in range(self.__numItems):
+            for j in range(self.__numVoters):
+                voter = vote_results[i, j]
+                if voter.is_informed() and voter.is_engaged():
+                    wealth_ie[i] += voter.get_tokens()
+                elif voter.is_informed() and not voter.is_engaged():
+                    wealth_iu[i] += voter.get_tokens()
+                elif not voter.is_informed() and voter.is_engaged():
+                    wealth_ue[i] += voter.get_tokens()
+                elif not voter.is_informed() and not voter.is_engaged():
+                    wealth_uu[i] += voter.get_tokens()
+
+            wealth_ie[i] = ( tcr_array[i].get_tcr_value() / tcr_array[i].get_total_tokens() ) * (wealth_ie[i] / num_informed_engaged)
+            wealth_iu[i] = ( tcr_array[i].get_tcr_value() / tcr_array[i].get_total_tokens() ) * (wealth_iu[i] / num_informed_unengaged)
+            wealth_ue[i] = ( tcr_array[i].get_tcr_value() / tcr_array[i].get_total_tokens() ) * (wealth_ue[i] / num_uninformed_engaged)
+            wealth_uu[i] = ( tcr_array[i].get_tcr_value() / tcr_array[i].get_total_tokens() ) * (wealth_uu[i] / num_uninformed_unengaged)
+            
+        plt.plot(wealth_ie, label='informed-engaged')
+        plt.plot(wealth_iu, label='informed-disengaged')
+        plt.plot(wealth_ue, label='uninformed-engaged')
+        plt.plot(wealth_uu, label='uninformed-disengaged')
+        plt.xlabel('Voting Round')
+        plt.ylabel('Average Wealth')
+        plt.legend(loc = 'upper left')
+        plt.savefig('images/wealth_infm' + str(self.__pInformed)[2] + 'infl' + str(self.__delta)[2:] + '.png')
+        plt.show()
+
+
 
     def set_tcr_values(self, tcr_array, item_array):
         for i in range(self.__numItems):
+            num_tokens = tcr_array[i].get_total_tokens()
             if i is not 0:
                 tcr = tcr_array[i - 1]
             else:
                 tcr = tcr_array[i]
 
             tcr_array[i] = copy(tcr)
+            tcr_array[i].set_total_tokens(num_tokens)
+            
             item = item_array[i]
             if item.is_valid() and item.is_accepted():
                 tcr_array[i].set_tcr_value(1, 0, 0, 0)
@@ -198,6 +271,8 @@ class Simulation():
         item_array = np.array([Item() for _ in range(self.__numItems)])
         tcr_array = np.empty(self.__numItems, dtype=type(TCR))
 
+        random.seed(999)
+        
         for i in range(self.__numItems):
             accepted_votes = 0
             rejected_votes = 0
@@ -231,9 +306,8 @@ class Simulation():
 
             for j in range(self.__numVoters):
                 voter = vote_results[i, j]
-                num_stake_majority_tokens = self.__stakePool / num_majority
-                num_inflation_tokens = (self.__totalTokens - prev_tokens) / (num_majority)
-                print(self.__totalTokens)
+                num_stake_majority_tokens = (self.__stakePool / num_majority)
+                num_inflation_tokens = (self.__totalTokens - prev_tokens) / (accepted_votes + rejected_votes)
                 if voter.get_vote() is not None:
                     if item_array[i].is_accepted() == voter.get_vote():
                         # if voter voted correctly, give self.__stake value back
@@ -241,15 +315,16 @@ class Simulation():
 
                     # every voter gets total tokens * self.__delta tokens
                     voter.set_tokens(voter.get_tokens() + num_inflation_tokens)
-            self.__stakePool = 0
+            self.__stakePool = 0.0
             # self.__stake = (self.__stake * (1 + self.__delta))
             self.__stake = ( self.__initialStake / self.__defaultTokens ) * (self.__totalTokens / self.__numVoters)
 
         self.set_tcr_values(tcr_array, item_array)
-
         self.write_file(tcr_array, item_array, vote_results)
+        self.generate_voter_plot(vote_results)
+        self.generate_tcr_plot(tcr_array)
+        self.generate_wealth_plot(vote_results, tcr_array)
 
-        self.generate_plot(vote_results)
 
 
 simulation = Simulation()
