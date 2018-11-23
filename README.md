@@ -30,3 +30,7 @@ python Simulation.py
 ```
 
 You can either change the parameters through the command line prompt when you first run the simulation or you can go into Simulation.py and change the member variables of the Simuation class to appropriate numbers. 
+
+### Reference
+This simulator was used to produce results for the following paper that is included in the paper folder of this repository:
+Yi Lucy Wang, Bhaskar Krishnamachari, "Enhancing Engagement in Token-Curated Registries via an Inflationary Mechanism," preprint manuscript, November 2018. 
