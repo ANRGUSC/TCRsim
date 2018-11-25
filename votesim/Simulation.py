@@ -17,7 +17,7 @@ class Simulation():
         self.__totalTokens = 0.0
         self.__totalTokens = self.__numVoters * self.__defaultTokens
 
-        self.__delta = .00
+        self.__delta = .05
 
         self.__stake = self.__defaultTokens * .05
         self.__initialStake = self.__stake
@@ -28,7 +28,7 @@ class Simulation():
         self.__pVCU = .15
 
         self.__pEngaged = .5
-        self.__pInformed = .1
+        self.__pInformed = .9
 
 
     def get_input(self):
